@@ -1,3 +1,15 @@
+/**
+ * Name: Kishan S Patel
+ * Email: kishan.patel@digipen.edu
+ * Assignment Number: 1
+ * Course: CS200
+ * Term: Fall 2024
+ *
+ * File: Affine.h
+ *
+ *  2D Affine Transformation Functions
+ */
+
 #include "Affine.h"
 
 namespace cs200 {
@@ -6,7 +18,7 @@ namespace cs200 {
   bool isVector(const glm::vec4 &v) { return near(v.z, 0.f) and near(v.w, 0.0f); }
 
   bool isAffine(const glm::mat4 &A) {
-    return not( //
+    return //
         isVector(A[0]) and // first column must be  [x, y, 0, 0]
         isVector(A[1]) and // second column must be [x, y, 0, 0]
 
@@ -15,9 +27,10 @@ namespace cs200 {
         near(A[2].z, 1.f) and //
         near(A[2].w, 0.f) and //
 
-        isPoint(A[3]) and // last column must be [0,0,0,1]
-        near(A[3].x, 0.f) and //
-        near(A[3].y, 0.f));
+        not near(A[3].x, 0.f) and // last column must be [x,y,0,1], x != 0, y != 0
+        not near(A[3].y, 0.f) and //
+        near(A[3].z, 0.f) and // should be 0
+        near(A[3].w, 1.f); // last component should be 1.0
   }
 
   glm::vec4 point(const float x, const float y) { return {x, y, 0.0f, 1.0f}; }
